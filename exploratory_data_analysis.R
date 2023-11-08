@@ -1,0 +1,18 @@
+# Projeto Análise exploratória dos dados
+# Fonte: https://www.kaggle.com/datasets/asaniczka/amazon-kindle-books-dataset-2023-130k-books/
+# Acessado em: 07/11/2023
+
+# Carregamento dos dados
+data <- read.csv("kindle_data-v2.csv", sep=",")
+
+# Contagem total de linhas e colunas
+ncol(data) # 16 colunas no total
+nrow(data) # 133.102 linhas no total
+
+# Visualizar as primeiras linhas do conjunto de dados
+head(data)
+
+# Resumo estatístico do conjunto de dados
+summary(dara)
+
+# Verificação dos tipos de dados do conjunto
