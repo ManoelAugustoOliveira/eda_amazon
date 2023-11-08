@@ -15,5 +15,10 @@ head(data)
 # Resumo estatístico do conjunto de dados
 summary(data)
 
-# Verificar tipos de dado
+# Verificar tipos de dados
 str(data)
+
+# Verificar dados ausentes
+sum(is.na(data))
+
+
