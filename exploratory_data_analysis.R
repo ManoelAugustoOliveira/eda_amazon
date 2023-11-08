@@ -13,6 +13,7 @@ nrow(data) # 133.102 linhas no total
 head(data)
 
 # Resumo estatístico do conjunto de dados
-summary(dara)
+summary(data)
 
-# Verificação dos tipos de dados do conjunto
+# Verificar tipos de dado
+str(data)
