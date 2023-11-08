@@ -22,3 +22,4 @@ str(data)
 sum(is.na(data))
 
 
+
