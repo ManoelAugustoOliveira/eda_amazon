@@ -25,11 +25,11 @@ dados <- dados[,-15]
 # as linhas com registros ausentes foram excluidas 
 dados <- na.omit(dados)
 
-# Identifica os tipos de dados de cada coluna
-tipos_de_dados <- sapply(dados, class)
-
 # Transformação da coluna category_id em "character"
 dados$category_id <- as.character(dados$category_id)
+
+# Identifica os tipos de dados de cada coluna
+tipos_de_dados <- sapply(dados, class)
 
 # Separação do conjuntos em variáveis qualitativas(character ou factor) e quantitativas (numeric ou integer)
 dados_qualitativos <- dados[, tipos_de_dados %in% c("character", "factor")]
@@ -37,3 +37,6 @@ dados_quantitativos <- dados[, tipos_de_dados %in% c("numeric", "integer")]
 
 # Resumo estatístico do conjunto de dados quantitativos
 summary(dados_quantitativos)
+
+boxplot(dados_quantitativos$stars)
+
