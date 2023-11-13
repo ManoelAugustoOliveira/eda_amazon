@@ -6,21 +6,30 @@
 install.packages("tidyverse")
 
 # Carregamento dos dados
-dados <- read.csv("kindle_data-v2.csv", sep=",")
+dados <- read.csv("kindle_data-v2.csv", sep=",", na.strings = "")
 
 # Contagem total de linhas e colunas
-ncol(dados) # 16 colunas no total
-nrow(dados) # 133.102 linhas no total
-dim(dados) # ambos
+dim(dados) # 
 
 # Visualizar as primeiras linhas do conjunto de dados
 head(dados)
 
 # Verificar dados ausentes
-sum(is.na(data)) # Não foram identificados dados ausentes
+ausentes <- colSums(is.na(dados))
+print(ausentes)
+
+# Devido a grande quantidade de dados ausentes
+# optou-se por exluir a coluna "publishedDate"
+dados <- dados[,-15]
+
+# as linhas com registros ausentes foram excluidas 
+dados <- na.omit(dados)
 
 # Identifica os tipos de dados de cada coluna
 tipos_de_dados <- sapply(dados, class)
+
+# Transformação da coluna category_id em "character"
+dados$category_id <- as.character(dados$category_id)
 
 # Separação do conjuntos em variáveis qualitativas(character ou factor) e quantitativas (numeric ou integer)
 dados_qualitativos <- dados[, tipos_de_dados %in% c("character", "factor")]
