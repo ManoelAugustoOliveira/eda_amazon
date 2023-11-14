@@ -5,6 +5,10 @@
 # Instalação dos pacotes que serão utilizados
 install.packages("tidyverse")
 
+# carregamento dos pacotes
+library(ggplot2)
+library(dplyr)
+
 # Carregamento dos dados
 dados <- read.csv("kindle_data-v2.csv", sep=",", na.strings = "")
 
@@ -37,10 +41,6 @@ dados_quantitativos <- dados[, tipos_de_dados %in% c("numeric", "integer")]
 
 # Resumo estatístico do conjunto de dados quantitativos
 summary(dados_quantitativos)
-
-# Visualização dos dados
-library(ggplot2)
-library(dplyr)
 
 ################################################################################
 isBestSeller <- ggplot(dados_qualitativos, aes(x = isBestSeller, fill = isBestSeller)) +
@@ -75,5 +75,3 @@ categoryName <- ggplot(freqAbsolutaCategory, aes(x = total, y = reorder(category
          theme_minimal()
 
 categoryName
-
-print(teste)

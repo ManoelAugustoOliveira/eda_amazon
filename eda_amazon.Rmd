@@ -1,0 +1,115 @@
+---
+title: "EDA - Amazon Kindle Books"
+author: "Manoel Augusto Lima Oliveira de Almeida"
+date: "2023-11-14"
+output: 
+  html_document:
+       highlight: textmate
+       theme: flatly
+       number_sections: yes
+       toc: yes
+       toc_float:
+         collapsed: yes
+         smooth_scroll: no
+---
+
+# Contextualização
+
+Conjunto de dados extraído de outubro de 2023. Contém detalhes do livro e informações de vendas, fonte de dados disponível em <https://www.kaggle.com/datasets/asaniczka/amazon-kindle-books-dataset-2023-130k-books/> Acessado em: 07/11/2023.
+
+O objetivo desta análise é realizar o EDA(Exploratory Data Analysis) do conjunto identificando os principais pontos a serem considerados para os dados.
+
+# Carregamento dos Pacotes
+
+```{r message=FALSE}
+library(ggplot2)
+library(dplyr)
+```
+
+# Leitura dos dados
+
+Carregamento do arquivo CSV:
+
+```{r}
+dados <- read.csv("kindle_data-v2.csv", sep=",", na.strings = "")
+```
+
+O parâmentro `na.strings = ""` foi utilizado para tratamento dos valores ausentes do conjunto como `Na` para facilitar sua identificação.
+
+Contagem total de linhas e colunas:
+
+``` {r}
+dim(dados)
+```
+
+Nome das colunas:
+
+``` {r}
+colnames(dados)
+```
+# Identificação de dados ausentes
+
+Utilizou-se o método `colSums` juntamente com os parâmetros `is.na` para identificar o total de dados ausentes por coluna.
+
+``` {r}
+ausentes <- colSums(is.na(dados))
+print(ausentes)
+```
+
+Devido a grande quantidade de dados ausentes optou-se por exluir a coluna "publishedDate".
+
+``` {r}
+dados <- dados[,-15]
+```
+
+As demais linhas com registros ausentes foram removidas:
+
+``` {r}
+dados <- na.omit(dados)
+dim(dados)
+```
+
+# Tipagem dos dados
+
+Identifica os tipos de dados de cada coluna e realiza a transformação de tipos das colunas
+
+``` {r}
+# Transformação da coluna category_id em "character"
+dados$category_id <- as.character(dados$category_id)
+tipos_de_dados <- sapply(dados, class)
+
+print(tipos_de_dados)
+```
+
+Separação do conjuntos em variáveis qualitativas (character ou factor) e quantitativas (numeric ou integer)
+
+``` {r}
+dados_qualitativos <- dados[, tipos_de_dados %in% c("character", "factor")]
+dados_quantitativos <- dados[, tipos_de_dados %in% c("numeric", "integer")]
+```
+
+# Análise e visualização dos dados
+
+Análise das principais variáveis identificadas no conjunto.
+
+Resumo estatístico das variáveis quantitativas:
+
+``` {r}
+summary(dados_quantitativos)
+```
+
+Nota-se uma grande amplitude nos valores relacionados a coluna `reviews` e `price`.
+
+``` {r}
+
+isBestSeller <- ggplot(dados_qualitativos, aes(x = isBestSeller, fill = isBestSeller)) +
+    geom_bar() +
+    labs(title = "Total de Best Sellers (Sim ou Não) ?",
+    x = "É Best Seller?",
+    y = "Total") +
+    theme_minimal() +
+    theme(legend.position = "none")
+
+isBestSeller
+```
+ 
