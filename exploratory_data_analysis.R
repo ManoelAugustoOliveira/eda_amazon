@@ -38,5 +38,40 @@ dados_quantitativos <- dados[, tipos_de_dados %in% c("numeric", "integer")]
 # Resumo estatístico do conjunto de dados quantitativos
 summary(dados_quantitativos)
 
-boxplot(dados_quantitativos$stars)
+# Visualização dos dados
+library(ggplot2)
+library(dplyr)
 
+################################################################################
+isBestSeller <- ggplot(dados_qualitativos, aes(x = isBestSeller, fill = isBestSeller)) +
+    geom_bar() +
+    labs(title = "Total de Best Sellers (Sim ou Não) ?",
+    x = "É Best Seller?",
+    y = "Total") +
+    theme_minimal() +
+    theme(legend.position = "none")
+
+isBestSeller
+
+################################################################################
+isKindleUnlimited <- ggplot(dados_qualitativos, aes(x = isKindleUnlimited, fill =isKindleUnlimited )) +
+  geom_bar() +
+  labs(title = "Total de Kindle Unlimited (Sim ou Não)?",
+       x = "É Kindle Unlimited",
+       y = "Contagem Total") +
+       theme_minimal() +
+       theme(legend.position = "none")
+
+isKindleUnlimited
+
+################################################################################
+freqAbsolutaCategory <- as.data.frame(table(dados_qualitativos$category_name))
+colnames(freqAbsolutaCategory) <- c("category_name", "total")
+
+categoryName <- ggplot(freqAbsolutaCategory, aes(x = total, y = reorder(category_name, total))) +
+    geom_col() +
+    labs(title = "Total de livros por categoria",
+         y = "Categoria") +
+         theme_minimal()
+
+categoryName
