@@ -75,3 +75,5 @@ categoryName <- ggplot(freqAbsolutaCategory, aes(x = total, y = reorder(category
          theme_minimal()
 
 categoryName
+
+print(teste)
